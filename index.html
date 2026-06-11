@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEMO34 — CLASSIFIED</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Boot screen -->
+  <div id="boot-screen">
+    <div class="boot-lines" id="boot-lines"></div>
+  </div>
+
+  <!-- Particle canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Scanlines overlay -->
+  <div class="scanlines"></div>
+
+  <!-- Main login screen -->
+  <div id="main-screen" class="hidden">
+
+    <!-- Left sidebar -->
+    <div class="sidebar left" id="sidebar-left">
+      <div class="sidebar-item s1"><span class="blink-red">●</span> ACCESS DENIED</div>
+      <div class="sidebar-item s2">⚠ CLASSIFIED FILE</div>
+      <div class="sidebar-item s3 glow-red">// DEMO34 //</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-item s4 small">FILE_ID: D34-7731</div>
+      <div class="sidebar-item s5 small">CLEARANCE: LVL 5</div>
+      <div class="sidebar-item s6 small blink-slow">STATUS: LOCKED</div>
+    </div>
+
+    <!-- Center content -->
+    <div class="center-wrap">
+      <div class="top-label">[ СЕКРЕТНЫЙ АРХИВ ]</div>
+
+      <div class="photo-wrap">
+        <div class="photo-ring"></div>
+        <img src="kokoshka.jpg" alt="DEMO34" class="main-photo" />
+        <div class="photo-overlay-text">CLASSIFIED</div>
+        <div class="scan-line-anim"></div>
+      </div>
+
+      <h1 class="main-title">DEMO34</h1>
+      <p class="subtitle">ВВЕДИ КОД ДОСТУПА ДЛЯ ВХОДА В АРХИВ</p>
+
+      <div class="input-wrap">
+        <input
+          type="password"
+          id="password-input"
+          placeholder="_ _ _ _ _ _"
+          maxlength="20"
+          autocomplete="off"
+        />
+        <div class="input-border-anim"></div>
+      </div>
+
+      <button id="enter-btn" onclick="checkPassword()">
+        <span class="btn-text">ВОЙТИ</span>
+        <span class="btn-glow"></span>
+      </button>
+
+      <p class="error-msg hidden" id="error-msg">⛔ ДОСТУП ЗАПРЕЩЁН — НЕВЕРНЫЙ КОД</p>
+    </div>
+
+    <!-- Right sidebar -->
+    <div class="sidebar right" id="sidebar-right">
+      <div class="sidebar-item r1"><span class="blink-green">◉</span> ANALYZING...</div>
+      <div class="sidebar-item r2">↻ COLLECTING DATA...</div>
+      <div class="sidebar-item r3 glow-green">SYSTEM ONLINE</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-item r4 small">NET: 192.168.34.1</div>
+      <div class="sidebar-item r5 small" id="clock-display">TIME: --:--:--</div>
+      <div class="sidebar-item r6 small blink-slow">TRACE: ACTIVE</div>
+    </div>
+
+  </div>
+
+  <!-- Access granted screen -->
+  <div id="access-screen" class="hidden">
+    <div class="access-title">
+      <span class="access-check">✔</span>
+      ДОСТУП РАЗРЕШЁН
+    </div>
+    <div class="access-sub">ДОБРО ПОЖАЛОВАТЬ В АРХИВ DEMO34</div>
+
+    <div class="archive-grid" id="archive-grid">
+
+      <div class="archive-card" style="--d:0.1s">
+        <div class="card-label">ФАЙЛ #001</div>
+        <div class="card-title">ПРОИСХОЖДЕНИЕ</div>
+        <div class="card-body">
+          Проект DEMO34 был инициирован в условиях полной секретности.
+          Дата основания: [REDACTED]. Локация: [CLASSIFIED].
+          Уровень угрозы: МАКСИМАЛЬНЫЙ.
+        </div>
+        <div class="card-stamp">TOP SECRET</div>
+      </div>
+
+      <div class="archive-card" style="--d:0.25s">
+        <div class="card-label">ФАЙЛ #002</div>
+        <div class="card-title">СУБЪЕКТ D34</div>
+        <div class="card-body">
+          Идентификация субъекта подтверждена. Способности выходят за рамки
+          стандартных параметров. Дальнейшее наблюдение ОБЯЗАТЕЛЬНО.
+          Контактировать только через защищённый канал.
+        </div>
+        <div class="card-stamp">CLASSIFIED</div>
+      </div>
+
+      <div class="archive-card" style="--d:0.4s">
+        <div class="card-label">ФАЙЛ #003</div>
+        <div class="card-title">ОПЕРАТИВНЫЕ ДАННЫЕ</div>
+        <div class="card-body">
+          Операция «ДЕМО» — фаза 3. Сбор данных завершён на 87%.
+          Передача информации запланирована. Все каналы шифрованы.
+          Ждите дальнейших инструкций.
+        </div>
+        <div class="card-stamp">EYES ONLY</div>
+      </div>
+
+      <div class="archive-card" style="--d:0.55s">
+        <div class="card-label">ФАЙЛ #004</div>
+        <div class="card-title">ПОСЛЕДНЕЕ ДОНЕСЕНИЕ</div>
+        <div class="card-body">
+          «Субъект активен. Следит. Знает о слежке.»
+          — Агент Р., 03:47 утра.
+          Связь оборвана. Статус агента: НЕИЗВЕСТЕН.
+        </div>
+        <div class="card-stamp">URGENT</div>
+      </div>
+
+      <div class="archive-card" style="--d:0.7s">
+        <div class="card-label">ФАЙЛ #005</div>
+        <div class="card-title">АУДИО-УЛИКИ</div>
+        <div class="card-body">
+          Обнаружены фонограммы неустановленного происхождения.
+          Частота: 34 Hz. Повторяющийся паттерн.
+          Анализ: В ПРОЦЕССЕ. Не слушать в одиночестве.
+        </div>
+        <div class="card-stamp">RESTRICTED</div>
+      </div>
+
+      <div class="archive-card" style="--d:0.85s">
+        <div class="card-label">ФАЙЛ #006</div>
+        <div class="card-title">ДИРЕКТИВА Ω</div>
+        <div class="card-body">
+          В случае компрометации архива — немедленное уничтожение данных.
+          Протокол «ЗЕРО» активирован. Таймер запущен.
+          Оставшееся время: [REDACTED].
+        </div>
+        <div class="card-stamp">DESTROY AFTER READING</div>
+      </div>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">[ ВЫЙТИ ИЗ СИСТЕМЫ ]</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
